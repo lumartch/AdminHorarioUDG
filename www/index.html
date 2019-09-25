@@ -8,6 +8,39 @@
         <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
         <link rel="shortcut icon" type="image/x-icon" href="https://www.mexicoescultura.com/galerias/espacios/principal/udg.jpg" />
         <title>Universidad de Guadalajara</title>
+        <style>
+            .toolbar {
+                background-color:rgb(26, 26, 26);
+            }
+            .card{
+                background-color:rgb(38, 38, 38);
+                color:lightcyan;
+            }
+            .list-header{
+                background-color: rgb(26, 26, 26);
+                color:lightcyan;
+            }
+            .list-item{
+                background-color: rgb(51, 51, 51);
+                color:lightcyan;
+            }
+            .button{
+                background-color: rgb(13, 13, 13);
+                color:lightcyan;
+            }
+            h1{
+                color:lightcyan;
+            }
+            .white{
+                color:lightcyan;
+            }
+            .toolbar-button {
+                color: red;
+            }
+            img {
+                border-radius: 20%;
+            }
+        </style>
         <script>
             // Variables para Template LOGIN
             var codigo = "";
@@ -41,19 +74,15 @@
                 xhttp.open("GET", "http://dcc.000webhostapp.com/2019B/horario.php?codigo="+ codigo + "&nip=" + nip, true);
                 xhttp.send();*/
             }
-
-            function insert(){
-                document.querySelector('#myNavigator').pushPage('insert.html', {data: {title: 'Alumno UDG'}});
-            }
         </script>
     </head>
     <body>
-        <ons-navigator swipeable id="myNavigator" page="index.html" animation="slide"></ons-navigator>
+        <ons-navigator swipeable id="myNavigator" page="index.html" animation="slide" ></ons-navigator>
             <!--Código de la página index, solo toma los valores para el Login-->
             <template id="index.html">
                 <ons-page id="index">
                 <ons-toolbar>
-                <div class="center">Universidad de Guadalajara</div>
+                    <div class="center"><label class="white">Universidad de Guadalajara</label></div>
                 </ons-toolbar>
                 <ons-card>
                     <center>
@@ -63,11 +92,11 @@
                 </ons-card>
                 <ons-card>
                     <center>
-                        <ons-input input-id="code" placeholder="Código" type="text" modifier="underbar"></ons-input>
+                        <ons-input input-id="code" placeholder="Código" type="text" modifier="underbar" ></ons-input>
                         <br><br>
                         <ons-input input-id="pass" placeholder="NIP" type="password" modifier="underbar"></ons-input>
                         <br><br>
-                        <ons-button id="push-button" onclick="login()">Entrar</ons-button>
+                        <ons-button id="enviarButton" modifier="material" onclick="login()">Entrar</ons-button>
                     </center>
                 </ons-card>
                 </ons-page>
@@ -76,61 +105,65 @@
             <!--Código para mostrar los posibles días donde va el alumno a la universidad-->
             <template id="user.html">
                 <ons-page id="user">
-                <ons-toolbar>
-                <div class="left"><ons-back-button>Salir</ons-back-button></div>
-                <div class="center">Alumno UDG</div>
-                </ons-toolbar>
-                <ons-card>
-                    <p class="intro">
-                        <ons-list-header>Bienvenido alumno</ons-list-header>
-                        <ons-list-item><label id="lcodigo"></label></ons-list-item>
-                        <ons-list-item><label id="lnombre"></label></ons-list-item>
-                        <ons-list-item><label id="lcarrera"></label></ons-list-item>  
-                        <script>
-                            document.getElementById("lcodigo").innerHTML = "Código: " + code;
-                            document.getElementById("lnombre").innerHTML = "Nombre: " + name;   
-                            document.getElementById("lcarrera").innerHTML = "Carrera: " + career;
-                        </script>
-                    </p>
-                </ons-card>
-    
-                <ons-card>
-                    <ons-list-header>Administración del horario</ons-list-header>
-                    <ons-list-item tappable onclick="insert()">Insertar</ons-list-item>
-                    <ons-list-item tappable>Cambiar</ons-list-item>
-                    <ons-list-item tappable>Eliminar</ons-list-item>
-                </ons-card>
+                    <ons-toolbar>
+                    <div class="left"><ons-back-button class="white">Salir</ons-back-button></div>
+                    <div class="center"><ons-icon size="20px" icon="md-face" class="white"></ons-icon><label class="white">  Alumno UDG</label></div>
+                    </ons-toolbar>
+                    <ons-card>
+                        <p class="intro">
+                            <ons-list-header>Bienvenido alumno</ons-list-header>
+                            <ons-list-item><label id="lcodigo"></label></ons-list-item>
+                            <ons-list-item><label id="lnombre"></label></ons-list-item>
+                            <ons-list-item><label id="lcarrera"></label></ons-list-item>  
+                            <script>
+                                document.getElementById("lcodigo").innerHTML = "Código: " + code;
+                                document.getElementById("lnombre").innerHTML = "Nombre: " + name;   
+                                document.getElementById("lcarrera").innerHTML = "Carrera: " + career;
+                            </script>
+                        </p>
+                    </ons-card>
+        
+                    <ons-card>
+                        <ons-list-header>Administración del horario</ons-list-header>
+                        <ons-list-item tappable onclick="myNavigator.pushPage('insert.html', { animation : 'slide' } )">Insertar</ons-list-item>
+                        <ons-list-item tappable>Cambiar</ons-list-item>
+                        <ons-list-item tappable>Eliminar</ons-list-item>
+                    </ons-card>
                 </ons-page>
             </template>
 
             <!--Código para agregar una nueva materia-->
             <template id="insert.html">
                 <ons-page id="insert">
-                <ons-toolbar>
-                <div class="left"><ons-back-button>Regresar</ons-back-button></div>
-                <div class="center" id="divHorario">Nueva materia</div>
-                </ons-toolbar>
-                <ons-card>
-                    <p class="intro">
-                        <ons-list-header>Nueva materia</ons-list-header>
-                        <ons-list-item><label id="lcod"></label></ons-list-item>
-                        <ons-list-item><label id="lnom"></label></ons-list-item>
-                        <ons-list-item><label id="lcar"></label></ons-list-item>  
-                        <script>
-                            document.getElementById("lcod").innerHTML = "Código: " + code;
-                            document.getElementById("lnom").innerHTML = "Nombre: " + name;   
-                            document.getElementById("lcar").innerHTML = "Carrera: " + career;
-                        </script>
-                    </p>
-                </ons-card>
-                <ons-card>
-                    <ons-list-header>Ingrese los datos</ons-list-header>
-                        <ons-list-item><ons-input input-id="nrc" placeholder="NRC" type="text" modifier="underbar"></ons-input></ons-list-item>
-                        <ons-list-item><ons-input input-id="dia" placeholder="Día" type="text" modifier="underbar"></ons-input></ons-list-item>
-                        <ons-list-item><ons-input input-id="hora" placeholder="Hora" type="text" modifier="underbar"></ons-input></ons-list-item>
-                        <ons-list-item><ons-input input-id="nmateria" placeholder="Nombre de la materia" type="text" modifier="underbar"></ons-input></ons-list-item>
-                        <center><ons-button>Salvar</ons-button>  <ons-button>Limpiar</ons-button></center>
-                </ons-card>
+                    <ons-toolbar>
+                    <div class="left"><ons-back-button class="white">Regresar</ons-back-button></div>
+                    <div class="center" id="divHorario"><ons-icon size="20px" icon="fa-file" class="white"></ons-icon><label class="white">  Nueva materia</label></div>
+                    </ons-toolbar>
+                    <ons-card>
+                        <p class="intro">
+                            <ons-list-header>Nueva materia</ons-list-header>
+                            <ons-list-item><label id="lcod"></label></ons-list-item>
+                            <ons-list-item><label id="lnom"></label></ons-list-item>
+                            <ons-list-item><label id="lcar"></label></ons-list-item>  
+                            <script>
+                                document.getElementById("lcod").innerHTML = "Código: " + code;
+                                document.getElementById("lnom").innerHTML = "Nombre: " + name;   
+                                document.getElementById("lcar").innerHTML = "Carrera: " + career;
+                            </script>
+                        </p>
+                    </ons-card>
+                    <ons-card>
+                        <ons-list-header>Ingrese los datos</ons-list-header>
+                            <ons-list-item><ons-input input-id="nrc" placeholder="NRC" type="text" modifier="underbar"></ons-input></ons-list-item>
+                            <ons-list-item><ons-input input-id="dia" placeholder="Día" type="text" modifier="underbar"></ons-input></ons-list-item>
+                            <ons-list-item><ons-input input-id="hora" placeholder="Hora" type="text" modifier="underbar"></ons-input></ons-list-item>
+                            <ons-list-item><ons-input input-id="nmateria" placeholder="Nombre de la materia" type="text" modifier="underbar"></ons-input></ons-list-item>
+                            <br>
+                            <center>
+                                <ons-button id="salvarButton" modifier="material">Salvar</ons-button>  
+                                <ons-button id="limpiarButton" modifier="material">Limpiar</ons-button>
+                            </center>
+                    </ons-card>
                 </ons-page>
             </template>
         <script type="text/javascript" src="cordova.js"></script>

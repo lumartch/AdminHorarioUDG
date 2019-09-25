@@ -1,4 +1,4 @@
-# A Blank PhoneGap App
+# Administración de horario U de G
 
 ## Usage
 
