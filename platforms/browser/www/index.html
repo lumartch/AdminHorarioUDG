@@ -41,10 +41,14 @@
                 xhttp.open("GET", "http://dcc.000webhostapp.com/2019B/horario.php?codigo="+ codigo + "&nip=" + nip, true);
                 xhttp.send();*/
             }
+
+            function insert(){
+                document.querySelector('#myNavigator').pushPage('insert.html', {data: {title: 'Alumno UDG'}});
+            }
         </script>
     </head>
     <body>
-            <ons-navigator swipeable id="myNavigator" page="index.html" animation="slide"></ons-navigator>
+        <ons-navigator swipeable id="myNavigator" page="index.html" animation="slide"></ons-navigator>
             <!--Código de la página index, solo toma los valores para el Login-->
             <template id="index.html">
                 <ons-page id="index">
@@ -92,9 +96,40 @@
     
                 <ons-card>
                     <ons-list-header>Administración del horario</ons-list-header>
-                    <ons-list-item tappable>Insertar</ons-list-item>
+                    <ons-list-item tappable onclick="insert()">Insertar</ons-list-item>
                     <ons-list-item tappable>Cambiar</ons-list-item>
                     <ons-list-item tappable>Eliminar</ons-list-item>
+                </ons-card>
+                </ons-page>
+            </template>
+
+            <!--Código para agregar una nueva materia-->
+            <template id="insert.html">
+                <ons-page id="insert">
+                <ons-toolbar>
+                <div class="left"><ons-back-button>Regresar</ons-back-button></div>
+                <div class="center" id="divHorario">Nueva materia</div>
+                </ons-toolbar>
+                <ons-card>
+                    <p class="intro">
+                        <ons-list-header>Nueva materia</ons-list-header>
+                        <ons-list-item><label id="lcod"></label></ons-list-item>
+                        <ons-list-item><label id="lnom"></label></ons-list-item>
+                        <ons-list-item><label id="lcar"></label></ons-list-item>  
+                        <script>
+                            document.getElementById("lcod").innerHTML = "Código: " + code;
+                            document.getElementById("lnom").innerHTML = "Nombre: " + name;   
+                            document.getElementById("lcar").innerHTML = "Carrera: " + career;
+                        </script>
+                    </p>
+                </ons-card>
+                <ons-card>
+                    <ons-list-header>Ingrese los datos</ons-list-header>
+                        <ons-list-item><ons-input input-id="nrc" placeholder="NRC" type="text" modifier="underbar"></ons-input></ons-list-item>
+                        <ons-list-item><ons-input input-id="dia" placeholder="Día" type="text" modifier="underbar"></ons-input></ons-list-item>
+                        <ons-list-item><ons-input input-id="hora" placeholder="Hora" type="text" modifier="underbar"></ons-input></ons-list-item>
+                        <ons-list-item><ons-input input-id="nmateria" placeholder="Nombre de la materia" type="text" modifier="underbar"></ons-input></ons-list-item>
+                        <center><ons-button>Salvar</ons-button>  <ons-button>Limpiar</ons-button></center>
                 </ons-card>
                 </ons-page>
             </template>
