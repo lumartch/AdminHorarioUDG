@@ -79,7 +79,7 @@
                 var h = document.getElementById("hora").value;
                 var nm = document.getElementById("nmateria").value;
                 if(n == "" || d =="" || h == "" || nm == ""){
-                    ons.notification.alert("Complete los campos para realizar la incerción.");
+                    ons.notification.alert("Complete los campos para realizar la inserción.");
                     return;
                 }
                 var xhttp = new XMLHttpRequest();
@@ -95,7 +95,7 @@
                     }
                 }
                 };
-                xhttp.open("GET", "https://lumartch.000webhostapp.com/p3.php?codigo=" + code +"&nombre=" + name + "&nrc=" + n +"&dia=" + d + "&hora="+ h + "&nmateria=" + nm, true);
+                xhttp.open("GET", "https://lumartch.000webhostapp.com/p3/insert.php?codigo=" + code +"&nombre=" + name + "&nrc=" + n +"&dia=" + d + "&hora="+ h + "&nmateria=" + nm, true);
                 xhttp.send();
             }
 
@@ -105,6 +105,29 @@
                 document.getElementById("hora").value = "";
                 document.getElementById("nmateria").value = "";
             }
+
+            function del(){
+                var nr = document.getElementById("nrcDel").value;
+                if(nr == ""){
+                    ons.notification.alert("Complete los campos para realizar la eliminación.");
+                    return;
+                }
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function(){
+                if(xhttp.readyState == 4 && this.status == 200){
+                    var cadena = xhttp.responseText;
+                    if(cadena == 1){
+                        ons.notification.alert("Materia eliminada correctamente.");
+                        document.getElementById("nrcDel").value = "";
+                    }
+                    else{
+                        ons.notification.alert("Error al eliminar la materia.");
+                    }
+                }
+                };
+                xhttp.open("GET", "https://lumartch.000webhostapp.com/p3/delete.php?nrcDel=" + nr, true);
+                xhttp.send();
+            }
         </script>
     </head>
     <body>
@@ -113,7 +136,7 @@
             <template id="index.html">
                 <ons-page id="index">
                 <ons-toolbar>
-                    <div class="center"><label class="white">Universidad de Guadalajara</label></div>
+                    <div class="center"><ons-icon size="20px" icon="md-home" class="white"></ons-icon>  <label class="white">Universidad de Guadalajara</label></div>
                 </ons-toolbar>
                 <ons-card>
                     <center>
@@ -133,7 +156,7 @@
                 </ons-page>
             </template>
     
-            <!--Código para mostrar los posibles días donde va el alumno a la universidad-->
+            <!--Código que muestra las opciones del usuario, como insertar, modificar y eliminar horario-->
             <template id="user.html">
                 <ons-page id="user">
                     <ons-toolbar>
@@ -158,7 +181,7 @@
                         <ons-list-header>Administración del horario</ons-list-header>
                         <ons-list-item tappable onclick="myNavigator.pushPage('insert.html', { animation : 'slide' } )">Insertar</ons-list-item>
                         <ons-list-item tappable>Cambiar</ons-list-item>
-                        <ons-list-item tappable>Eliminar</ons-list-item>
+                        <ons-list-item tappable onclick="myNavigator.pushPage('delete.html', { animation : 'slide' } )">Eliminar</ons-list-item>
                     </ons-card>
                 </ons-page>
             </template>
@@ -193,6 +216,24 @@
                             <center>
                                 <ons-button id="salvarButton" modifier="material" onclick="insert()">Salvar</ons-button>  
                                 <ons-button id="limpiarButton" modifier="material" onclick="limpiar()">Limpiar</ons-button>
+                            </center>
+                    </ons-card>
+                </ons-page>
+            </template>
+
+            <!--Código para eliminar una materia-->
+            <template id="delete.html">
+                <ons-page id="delete">
+                    <ons-toolbar>
+                    <div class="left"><ons-back-button class="white">Regresar</ons-back-button></div>
+                    <div class="center"><ons-icon size="20px" icon="fa-cog" class="white"></ons-icon><label class="white">  Eliminar materia</label></div>
+                    </ons-toolbar>
+                    <ons-card>
+                        <ons-list-header>Eliminar</ons-list-header>
+                            <ons-list-item><ons-input input-id="nrcDel" placeholder="NRC" type="text" modifier="underbar"></ons-input></ons-list-item>
+                            <center>
+                                <br>
+                                <ons-button id="eliminarButton" modifier="material" onclick="del()">Eliminar</ons-button>
                             </center>
                     </ons-card>
                 </ons-page>
