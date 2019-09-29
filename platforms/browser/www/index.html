@@ -51,8 +51,7 @@
             var career = "";
             // Función para iniciar sesión
             function login(){
-                document.querySelector('#myNavigator').pushPage('user.html', {data: {title: 'Alumno UDG'}});
-                /*codigo = document.getElementById("code").value;
+                codigo = document.getElementById("code").value;
                 nip = document.getElementById("pass").value;
                 var xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange = function(){
@@ -71,8 +70,40 @@
                 }
                 };
                 xhttp.open("GET", "http://dcc.000webhostapp.com/2018/datosudeg.php?codigo="+ codigo + "&nip=" + nip, true);
-                xhttp.open("GET", "http://dcc.000webhostapp.com/2019B/horario.php?codigo="+ codigo + "&nip=" + nip, true);
-                xhttp.send();*/
+                xhttp.send();
+            }
+
+            function insert(){
+                var n = document.getElementById("nrc").value;
+                var d = document.getElementById("dia").value;
+                var h = document.getElementById("hora").value;
+                var nm = document.getElementById("nmateria").value;
+                if(n == "" || d =="" || h == "" || nm == ""){
+                    ons.notification.alert("Complete los campos para realizar la incerción.");
+                    return;
+                }
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function(){
+                if(xhttp.readyState == 4 && this.status == 200){
+                    var cadena = xhttp.responseText;
+                    if(cadena == 1){
+                        ons.notification.alert("Materia agregada correctamente.");
+                        limpiar();
+                    }
+                    else{
+                        ons.notification.alert("Error, la inserción no se pudo hacer correctamente.");
+                    }
+                }
+                };
+                xhttp.open("GET", "https://lumartch.000webhostapp.com/p3.php?codigo=" + code +"&nombre=" + name + "&nrc=" + n +"&dia=" + d + "&hora="+ h + "&nmateria=" + nm, true);
+                xhttp.send();
+            }
+
+            function limpiar(){
+                document.getElementById("nrc").value = "";
+                document.getElementById("dia").value = "";
+                document.getElementById("hora").value = "";
+                document.getElementById("nmateria").value = "";
             }
         </script>
     </head>
@@ -160,8 +191,8 @@
                             <ons-list-item><ons-input input-id="nmateria" placeholder="Nombre de la materia" type="text" modifier="underbar"></ons-input></ons-list-item>
                             <br>
                             <center>
-                                <ons-button id="salvarButton" modifier="material">Salvar</ons-button>  
-                                <ons-button id="limpiarButton" modifier="material">Limpiar</ons-button>
+                                <ons-button id="salvarButton" modifier="material" onclick="insert()">Salvar</ons-button>  
+                                <ons-button id="limpiarButton" modifier="material" onclick="limpiar()">Limpiar</ons-button>
                             </center>
                     </ons-card>
                 </ons-page>
